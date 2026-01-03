@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.example.but_eo.entity.Matching;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,16 +15,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MatchingDetailResponse {
     private String matchId;
+    private String matchRegion;
     private String teamName;
     private String teamRegion;
+    private String teamImg;
+    private int teamRating;
     private String stadiumName;
-    private String stadiumRegion;
     private LocalDateTime matchDate;
     private Boolean loan;
-    private Matching.Match_Type matchType;
+    private String matchType;
     private String etc;
     private String challengerTeamName;
     private Integer winnerScore;
     private Integer loserScore;
     private Matching.State state;
+    private ChallengerTeamResponse challengerTeam;
+    private List<ChallengerTeamResponse> challengerTeams;
 }

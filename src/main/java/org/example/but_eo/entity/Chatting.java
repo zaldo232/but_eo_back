@@ -1,5 +1,6 @@
 package org.example.but_eo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class Chatting {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "chatting")
     private List<ChattingMember> memberList = new ArrayList<>();
     

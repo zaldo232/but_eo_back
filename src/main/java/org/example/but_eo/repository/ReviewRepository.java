@@ -11,4 +11,6 @@ public interface ReviewRepository extends JpaRepository<MatchReview, String> {
     List<MatchReview> findByMatch_MatchId(String matchId);
 
     List<MatchReview> findByTargetTeam_TeamId(String teamId);
+
+    int countByTargetTeam_TeamId(String teamId);
 }

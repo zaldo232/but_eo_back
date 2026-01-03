@@ -36,7 +36,6 @@ public class ReviewController {
     }
 
 
-
     public class SecurityUtil {
         public static String getCurrentUserId() {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

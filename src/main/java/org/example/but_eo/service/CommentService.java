@@ -37,7 +37,7 @@ public class CommentService {
         comment.setContent(request.getContent());
         comment.setLikeCount(0);
         comment.setState(Comment.State.PUBLIC);
-        comment.setCreateAt(LocalDateTime.now());
+        comment.setCreatedAt(LocalDateTime.now());
 
         commentRepository.save(comment);
 
@@ -46,16 +46,18 @@ public class CommentService {
     }
 
     public List<CommentResponse> getComments(String boardId) {
-        List<Comment> commentList = commentRepository.findByBoard_BoardIdAndStateOrderByCreateAtDesc(
+        List<Comment> commentList = commentRepository.findByBoard_BoardIdAndStateOrderByCreatedAtDesc(
                 boardId, Comment.State.PUBLIC
         );
 
         return commentList.stream().map(comment -> new CommentResponse(
                 comment.getCommentId(),
                 comment.getUser().getName(),
+                comment.getUser().getUserHashId(),
                 comment.getContent(),
-                comment.getCreateAt(),
-                comment.getLikeCount()
+                comment.getCreatedAt(),
+                comment.getLikeCount(),
+                comment.getUser().getProfile()
         )).toList();
     }
 

@@ -15,14 +15,16 @@ import java.util.Optional;
 @Repository
 public interface TeamMemberRepository extends JpaRepository<TeamMember, TeamMemberKey> {
 
-    @Query("""
+    /*@Query("""
         SELECT COUNT(tm) > 0
         FROM TeamMember tm
         WHERE tm.user.userHashId = :userId
         AND tm.team.event = :event
-    """)
+    """)*/
 
-    boolean existsByUserAndEvent(@Param("userId") String userId, @Param("event") Team.Event event);
+    boolean existsByUser_UserHashIdAndTeam_TeamId(String userId, String teamId);
+
+    boolean existsByUser_UserHashIdAndTeam_Event(String userId, Team.Event event);
 
     void deleteAllByUser(Users user);
 
@@ -36,5 +38,18 @@ public interface TeamMemberRepository extends JpaRepository<TeamMember, TeamMemb
 
     List<TeamMember> findAllByUser_UserHashIdAndType(String userHashId, TeamMember.Type type);
 
+    List<TeamMember> findAllByUser_UserHashId(String userId);
 
+    Optional<TeamMember> findByUser_UserHashIdAndTypeAndTeam_Event(
+            String userHashId,
+            TeamMember.Type type,
+            Team.Event event
+    );
+
+    @Query("SELECT tm.user FROM TeamMember tm WHERE tm.team.teamId = :teamId AND tm.type = 'LEADER'")
+    Optional<Users> findLeaderByTeamId(@Param("teamId") String teamId);
+
+
+    @Query(value = "SELECT * FROM Team WHERE teamId = :teamA OR teamId = :teamB", nativeQuery = true)
+    List<Team> findMatchedTeams(@Param("teamA") String teamA, @Param("teamB") String teamB);
 }

@@ -36,13 +36,6 @@ public class ChattingMessage {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Enumerated(EnumType.STRING)
-    private MessageType type;
-
-    public enum MessageType {
-        ENTER, TALK, EXIT
-    }
-
     @OneToMany(mappedBy = "chattingMessage")
     private List<ChattingMessageMapping> chattingMessageMappinglist = new ArrayList<>();
 

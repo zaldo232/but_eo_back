@@ -34,7 +34,7 @@ public class InvitationService {
         Team.Event event = team.getEvent();
 
         boolean alreadyInTeam = teamMemberRepository
-                .existsByUserAndEvent(userId, event);
+                .existsByUser_UserHashIdAndTeam_Event(userId, event);
         if (alreadyInTeam) {
             throw new IllegalStateException("이미 해당 종목에 가입된 팀이 있습니다.");
         }

@@ -1,6 +1,8 @@
 package org.example.but_eo.repository;
 
 import org.example.but_eo.entity.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -30,4 +32,8 @@ public interface UsersRepository extends JpaRepository<Users, String> {
     List<Users> findByUserHashIdIn(List<String> userIds);
 
     Users findByTel(String tel);
+
+    Page<Users> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
+    Page<Users> findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String nameKeyword, String emailKeyword, Pageable pageable);
 }

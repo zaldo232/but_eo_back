@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentResponse {
     private String commentId;
+    private String userHashId;
     private String userName;
     private String content;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private int likeCount;
+    private String profileImg;
 }
-

@@ -14,6 +14,7 @@ import java.util.List;
 public class BoardDetailResponse {
     private String boardId;
     private String title;
+    private String userHashId;
     private String content;
     private Board.State state;
     private Board.Category category;

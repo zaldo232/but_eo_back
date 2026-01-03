@@ -26,6 +26,6 @@ public class UserInfoResponseDto {
     private int tennisScore;
     private int tableTennisScore;
     private int bowlingScore;
-    private LocalDateTime CreatedAt;
+    private LocalDateTime createdAt;
 
 }

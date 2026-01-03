@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, String> {
 
-    List<Comment> findByBoard_BoardIdAndStateOrderByCreateAtDesc(String boardId, Comment.State state);
+    List<Comment> findByBoard_BoardIdAndStateOrderByCreatedAtDesc(String boardId, Comment.State state);
 
     void deleteAllByBoard_BoardId(String boardId);
 

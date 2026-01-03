@@ -21,11 +21,6 @@ public class ChatMessage {
     private String nickName;
     private String message;
     private String createdAt;
-    private MessageType type;
-
-    public enum MessageType {
-        ENTER, TALK, EXIT
-    }
 
 //    private String chatRoomId; //채팅방 아이디
 //    private String senderId; //메세지 전송자 아이디

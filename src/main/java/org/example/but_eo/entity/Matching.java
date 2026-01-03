@@ -53,12 +53,43 @@ public class Matching {
     private LocalDateTime matchDate;
 
     @Column(length = 30, nullable = true)
-    private String region;
+    private String matchRegion;
 
+    @Column(length = 30, nullable = true)
+    private String teamRegion; // 팀에서 떙겨와야함 차후 제거 예정
 
     public enum Match_Type {
-        SOCCER, FUTSAL, BASEBALL, BASKETBALL, BADMINTON, TENNIS, TABLE_TENNIS, BOWLING
-    } //축구, 풋살, 야구, 농구, 배드민턴, 테니스, 탁구, 볼링
+        SOCCER("축구"),
+        FUTSAL("풋살"),
+        BASEBALL("야구"),
+        BASKETBALL("농구"),
+        BADMINTON("배드민턴"),
+        TENNIS("테니스"),
+        TABLE_TENNIS("탁구"),
+        BOWLING("볼링");
+
+        private final String displayName;
+
+        Match_Type(String displayName) {
+            this.displayName = displayName;
+        }
+
+        @com.fasterxml.jackson.annotation.JsonValue
+        public String getDisplayName() {
+            return displayName;
+        }
+
+        @com.fasterxml.jackson.annotation.JsonCreator
+        public static Match_Type from(String value) {
+            for (Match_Type type : values()) {
+                if (type.name().equalsIgnoreCase(value) || type.displayName.equals(value)) {
+                    return type;
+                }
+            }
+            throw new IllegalArgumentException("Invalid match type: " + value);
+        }
+    }
+ //축구, 풋살, 야구, 농구, 배드민턴, 테니스, 탁구, 볼링
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

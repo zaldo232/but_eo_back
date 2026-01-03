@@ -83,4 +83,11 @@ public class TeamJoinService {
         invitation.setStatus(TeamInvitation.Status.DECLINED);
         teamInvitationRepository.save(invitation);
     }
+
+    public boolean isAlreadyRequested(String teamId, String userId) {
+        return teamInvitationRepository.existsPendingByUserAndTeamAndDirection(
+                userId, teamId, TeamInvitation.Direction.REQUEST
+        );
+    }
+
 }

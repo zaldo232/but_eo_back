@@ -44,4 +44,12 @@ public class TeamJoinController {
         teamJoinService.rejectJoinRequest(teamId, userId, leaderId);
         return ResponseEntity.ok("가입 거절 완료");
     }
+
+    @GetMapping
+    public ResponseEntity<Boolean> checkRequested(@PathVariable String teamId, Authentication auth) {
+        String userId = (String) auth.getPrincipal();
+        boolean alreadyRequested = teamJoinService.isAlreadyRequested(teamId, userId);
+        return ResponseEntity.ok(alreadyRequested);
+    }
+
 }

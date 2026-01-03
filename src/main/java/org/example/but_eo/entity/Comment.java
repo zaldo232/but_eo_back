@@ -45,5 +45,5 @@ public class Comment {
     private LocalDateTime changeAt;
 
     @Column(nullable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 }

@@ -6,6 +6,7 @@ import org.example.but_eo.service.CustomOAuth2UserService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -35,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                         .requestMatchers(PathRequest.toH2Console()).permitAll() //h2-console 기본 경로 접근 허용
                         .requestMatchers("/", "/login/**").permitAll() //로그인 화면이랑 메인 화면 접근 허용
+                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .requestMatchers("/api/users/login", "/api/users/register").permitAll() //로그인이랑 회원가입만 허용 나머진 인증필요
                         .anyRequest().authenticated()
                 )
@@ -76,11 +78,13 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         //TODO : 여기 안에 프론트 엔드 주소 넣어야함
-        config.setAllowedOrigins(List.of("")); //허용할 도메인
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE")); //허용할 HTTP 메소드
+        //config.setAllowedOrigins(List.of("")); //허용할 도메인
+
+        config.setAllowedOrigins(List.of("http://localhost:5173", "13.125.250.158:5173"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH")); //허용할 HTTP 메소드
         config.setAllowedHeaders(List.of("Authorization", "Content-Type")); //허용할 헤더
         config.setAllowCredentials(true); //인증 정보 포함 허용
-
+        //수정
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

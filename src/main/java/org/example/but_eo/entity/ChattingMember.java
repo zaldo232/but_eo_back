@@ -1,5 +1,6 @@
 package org.example.but_eo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class ChattingMember {
     @EmbeddedId
     private ChattingMemberKey chattingMemberKey;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("userHashId")
     @JoinColumn(name = "user_hash_id", nullable = false)

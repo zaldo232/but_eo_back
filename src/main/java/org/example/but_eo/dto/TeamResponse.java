@@ -2,11 +2,17 @@ package org.example.but_eo.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.example.but_eo.entity.Team;
+import org.example.but_eo.entity.Team.Event;
+import org.example.but_eo.entity.Team.Team_Case;
+import org.example.but_eo.entity.Team.Team_Type;
+import org.example.but_eo.entity.TeamMember;
 
 import java.util.List;
 
 @Getter
+@Setter
 @Builder
 public class TeamResponse {
     private String teamId;
@@ -16,9 +22,11 @@ public class TeamResponse {
     private int rating;
     private String teamDescription;
     private String teamImg;
-    private String event;
-    private String teamType;
-    private String teamCase;
+    private Event event;
+    private Team_Type teamType;
+    private Team_Case teamCase;
+
+    private String myJoinStatus; // "MEMBER", "PENDING", "NONE"
 
     private int totalMembers;
     private int matchCount;
@@ -27,8 +35,17 @@ public class TeamResponse {
     private int drawCount;
     private int totalReview;
 
-    private List<String> memberNames;
+    private double avgReviewRating;
+
+    private List<MemberDto> members;
     private List<String> matchIds;
+
+    @Getter
+    @Builder
+    public static class MemberDto {
+        private String name;
+        private boolean isLeader;
+    }
 
     public static TeamResponse from(Team team) {
         return TeamResponse.builder()
@@ -39,23 +56,27 @@ public class TeamResponse {
                 .rating(team.getRating())
                 .teamDescription(team.getTeamDescription())
                 .teamImg(team.getTeamImg())
-                .event(team.getEvent().name())
-                .teamType(team.getTeamType().name())
-                .teamCase(team.getTeamCase() != null ? team.getTeamCase().name() : null)
+                .event(team.getEvent())
+                .teamType(team.getTeamType())
+                .teamCase(team.getTeamCase())
 
-                .totalMembers(team.getTotalMembers())
+                .totalMembers(team.getTeamMemberList() != null ? team.getTeamMemberList().size() : 0)
                 .matchCount(team.getMatchCount())
                 .winCount(team.getWinCount())
                 .loseCount(team.getLoseCount())
                 .drawCount(team.getDrawCount())
                 .totalReview(team.getTotalReview())
 
-                .memberNames(team.getTeamMemberList().stream()
-                        .map(tm -> tm.getUser().getName())
+                .members(team.getTeamMemberList().stream()
+                        .map(tm -> MemberDto.builder()
+                                .name(tm.getUser().getName())
+                                .isLeader(tm.getType() == TeamMember.Type.LEADER)
+                                .build())
                         .toList())
                 .matchIds(team.getMatchingList().stream()
                         .map(m -> m.getMatchId())
                         .toList())
                 .build();
     }
+
 }
